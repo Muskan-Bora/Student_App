@@ -1,0 +1,189 @@
+{% extends 'student_app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container">
+        <h2><i class="fas fa-chart-bar"></i> Academic Scores</h2>
+    
+        {% if is_authenticated %}
+            <div class="student-info">
+                <p><strong>Name:</strong> {{ student_profile }}</p>
+            </div>
+        {% endif %}
+    
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Enter Your Marks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for course in courses %}
+                <tr>
+                    <td>{{ course.name }}</td>
+                    <td><input type="number" class="marks-input" data-course-id="{{ course.id }}"></td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="2">No courses available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+        {% if is_authenticated %}
+            <!-- Button to calculate overall performance -->
+            <button id="calculate-btn" class="calculate-button">Calculate Overall Performance</button>
+    
+            <div id="overall-performance" class="overall-performance" style="display: none;">
+                <h3><i class="fas fa-poll"></i> Overall Performance</h3>
+                
+                <p><strong><i class="fas fa-percentage"></i> Overall Percentage:</strong> 
+                    <span id="overall-percentage">{{ overall_percentage }}</span>%
+                </p>
+            
+                <p><strong><i class="fas fa-graduation-cap"></i> Final Grade:</strong> 
+                    <span id="final-grade">{{ final_grade }}</span>
+                </p>
+            
+                <p><strong><i class="fas fa-comment-dots"></i> Final Remarks:</strong> 
+                    <span id="final-remarks">{{ final_remarks }}</span>
+                </p>
+            </div>
+        {% else %}
+            <p style="color: red; text-align: center;">
+                <strong><i class="fas fa-exclamation-circle"></i> Sign up now to calculate your scores!</strong>
+                <br>
+                <a href="{% url 'users:register' %}" class="btn btn-primary">Sign Up</a>
+            </p>
+        {% endif %}
+    </div>
+
+    <style>
+        .container {
+            max-width: 800px;
+            margin: auto;
+            margin-right: 230px;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .student-info {
+            padding: 10px;
+            background: #f8f9fa;
+            border-left: 5px solid #007bff;
+            margin-bottom: 20px;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+
+        .table th {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        .table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+
+        .score-value {
+            text-align: center;
+        }
+
+        .table th {
+            background: #007bff;
+            color: white;
+        }
+
+        .calculate-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background: #28a745;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .calculate-button:hover {
+            background: #218838;
+        }
+
+        .overall-performance {
+            padding: 15px;
+            background: #f8f9fa;
+            border-left: 5px solid #17a2b8;
+            margin-top: 20px;
+            display: none;
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const calculateBtn = document.getElementById("calculate-btn");
+            if (calculateBtn) {
+                calculateBtn.addEventListener("click", function () {
+                    let totalScore = 0;
+                    let numCourses = 0;
+                    document.querySelectorAll(".marks-input").forEach(input => {
+                        let score = parseFloat(input.value);
+                        if (!isNaN(score) && score >= 0) {
+                            totalScore += score;
+                            numCourses++;
+                        }
+                    });
+        
+                    if (numCourses > 0) {
+                        let overallPercentage = (totalScore / (numCourses * 100)) * 100;
+                        document.getElementById("overall-percentage").innerText = overallPercentage.toFixed(2);
+        
+                        let grade;
+                        if (overallPercentage >= 90) grade = 'A+';
+                        else if (overallPercentage >= 80) grade = 'A';
+                        else if (overallPercentage >= 70) grade = 'B';
+                        else if (overallPercentage >= 60) grade = 'C';
+                        else if (overallPercentage >= 50) grade = 'D';
+                        else grade = 'F';
+        
+                        let remarks = {
+                            'A+': 'Outstanding Performance!',
+                            'A': 'Great Job! Keep pushing.',
+                            'B': 'Good! Keep improving.',
+                            'C': 'Fair Performance.',
+                            'D': 'Below Average. Work harder!',
+                            'F': 'Failed. You need more effort!'
+                        }[grade];
+        
+                        document.getElementById("final-grade").innerText = grade;
+                        document.getElementById("final-remarks").innerText = remarks;
+                        document.getElementById("overall-performance").style.display = "block";
+                    } else {
+                        alert("Please enter valid marks for at least one course.");
+                    }
+                });
+            }
+        });
+        </script>
+
+{% endblock %}

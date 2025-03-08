@@ -1,0 +1,116 @@
+{% extends 'student_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <h2>Create Your New Task For Today</h2>
+        <form method="post">
+            {% csrf_token %}
+            <label>Title:</label>
+            <input type="text" name="title" required>
+
+            <label>Description:</label>
+            <textarea name="description"></textarea>
+
+            <div class="mb-3">
+                <label class="form-label">Priority:</label>
+                <select name="priority" class="form-select">
+                    <option value="High">High</option>
+                    <option value="Medium" selected>Medium</option>
+                    <option value="Low">Low</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Progress:</label>
+                <select name="progress" class="form-select">
+                    <option value="Not Started">Not Started</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Completed">Completed</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-success"><i class="fas fa-plus"></i> Add Task</button>
+            <a href="{% url 'task_list' %}" class="btn btn-secondary">Back</a>
+        </form>
+    </div>
+
+    <style>
+        /* Container styling */
+        .container {
+            max-width: 500px;
+            margin: 100px auto;
+            padding: 30px;
+            background: #040733;
+            color: aliceblue;
+            border-radius: 10px 50px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-right: 400px;
+        }
+    
+        /* Heading */
+        .container h2 {
+            font-size: 24px;
+            color: #0be1e1;
+            margin-bottom: 20px;
+        }
+    
+        /* Labels */
+        .container label {
+            display: block;
+            text-align: left;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fbe6e6;
+        }
+    
+        /* Input fields */
+        .container input[type="text"],
+        .container textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s ease-in-out;
+        }
+    
+        /* Input field focus effect */
+        .container input[type="text"]:focus,
+        .container textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+    
+        /* Textarea */
+        .container textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+    
+        /* Submit Button */
+        .btn-success {
+            background: #0dcbe0;
+            color: rgb(18, 2, 2);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s ease-in-out;
+        }
+    
+        .btn-success:hover {
+            background: #2229a6;
+            color: wheat;
+        }
+    
+        /* Font Awesome Icon */
+        .btn-success i {
+            margin-right: 5px;
+        }
+    </style>
+{% endblock %}

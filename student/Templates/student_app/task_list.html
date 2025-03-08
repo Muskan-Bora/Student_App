@@ -1,0 +1,165 @@
+{% extends 'student_app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="task-container">
+        <h2><i class="fas fa-tasks"></i> Schedule Your Day Now!! </h2>
+
+        <div class="quote-box text-center p-3 my-3">
+            <blockquote>🌟 {{ quote }} 🌟</blockquote>
+        </div>
+        
+        <a href="{% url 'create_task' %}" class="btn-add"><i class="fas fa-plus"></i> Add Your Amazing Tasks</a>
+
+        <ul class="task-list">
+            {% for task in tasks %}
+                <li class="task-item {% if task.completed %}completed{% endif %}">
+                    <span>{{ task.title }}</span> - <span class="badge1">{{ task.priority }}</span>
+                    <small>Status: <span class="badge2">{{ task.progress }}</span></small>
+                    <div class="task-actions">
+                        <a href="{% url 'update_task' task.id %}" class="btn-edit"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'delete_task' task.id %}" class="btn-delete">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </div>
+                </li>
+            {% empty %}
+                <p class="no-tasks">No tasks available.</p>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <style>
+        /* Task Container */
+        .task-container {
+            max-width: 600px;
+            margin: 105px auto;
+            margin-right: 300px;
+            background: #030942;
+            padding: 50px;
+            border-radius: 10px 50px;
+            box-shadow: 0 4px 10px rgb(255, 254, 254);
+        }
+
+        .quote-box {
+            color: #c6f7eb;
+            font-size: 15px;
+        }
+
+        .badge1 {
+            background-color: #0dd4ee;
+            color: black;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .badge2 {
+            background-color: #060c30;
+            color: rgb(245, 238, 238);
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        /* Title */
+        .task-container h2 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #dfeef7;
+        }
+
+        /* Add Task Button */
+        .btn-add {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: #c6f7eb;
+            color: rgb(30, 21, 21);
+            padding: 10px 15px;
+            border-radius: 50px 10px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .btn-add:hover {
+            background: #0dd4ee;
+            color: #0c1839;
+        }
+
+        /* Task List */
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .task-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        .task-item:hover {
+            background: #e9ecef;
+        }
+
+        /* Completed Task */
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+            opacity: 0.7;
+        }
+
+        /* Task Actions (Edit & Delete Buttons) */
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-edit, .btn-delete {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            transition: 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-edit:hover {
+            background: #e0a800;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        /* No Task Message */
+        .no-tasks {
+            text-align: center;
+            font-size: 18px;
+            color: #93cce2;
+            margin-top: 15px;
+        }
+    </style>
+
+{% endblock %}

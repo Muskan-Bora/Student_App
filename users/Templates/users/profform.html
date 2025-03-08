@@ -1,0 +1,86 @@
+{% extends 'student_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="offset-md-2">
+        <div class="container">
+            <h1>Edit Profile</h1>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-success">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        /* General Reset */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        /* Container */
+        .container {
+            max-width: 450px;
+            margin: 30px auto;
+            padding: 20px;
+            background: black;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: white;
+        }
+
+        /* Header */
+        h1 {
+            font-size: 24px;
+            color: #f3e9e9;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Form */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        form input, form select, form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        form input:focus, form select:focus, form textarea:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            /* color: #fff;
+            background-color: #28a745; */
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #218838;
+        }
+
+    </style>
+{% endblock %}

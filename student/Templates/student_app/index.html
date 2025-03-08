@@ -1,0 +1,18 @@
+{% extends "student_app/base.html" %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student App</title>
+</head>
+<body class="home-background">
+    {% block content %}
+        <div class="home-container">
+            <img src="{% static 'home/home1.png' %}" alt="Welcome Image">
+        </div>
+    {% endblock %}
+</body>
+</html>

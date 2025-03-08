@@ -1,0 +1,272 @@
+{% extends 'student_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+    <div class="dashboard">
+        <div class="container">
+            <br><br>
+            <h1>
+                {{ welcome_message }} 
+                <i class="fa-solid fa-face-smile-wink"></i>
+            </h1>
+            <p class="quote-dashboard">
+                “Education is the passport to the future, for tomorrow belongs to those who prepare for it today.” — Malcolm X
+            </p>
+
+            {% if user.is_authenticated %}
+                {% if profile %}
+                    <div class="card mt-4">
+                        <div class="card-body">
+                            <p><strong>Full Name:</strong> {{ profile.full_name }}</p>
+                            <p><strong>Roll No:</strong> {{ profile.roll_no }}</p>
+                            <p><strong>Standard:</strong> {{ profile.std }}</p>
+                            <p><strong>Division:</strong> {{ profile.division }}</p>
+                        </div>
+                    </div>
+                    <br>
+                {% else %}
+                    <div class="alert alert-warning mt-4">
+                        <p>No profile details available. Please update your profile!</p>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="alert alert-danger mt-4">
+                    <p>You need to <a href="{% url 'users:register' %}">Sign Up</a> to view your profile details.</p>
+                </div><br>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="calendar-dashboard">
+        <br>
+        <div class="container">
+            <h1>Attendance Dashboard</h1><br>
+
+            {% if user.is_authenticated %}
+                <h3><i class="fa-solid fa-calendar-days"></i> {{ month }}</h3>
+
+                <div class="calendar">
+                    <div class="calendar-header">
+                        <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                    </div>
+                    <div class="calendar-body">
+                        {% for day in calendar_days %}
+                            <div class="day 
+                                {% if day.status == 'Present' %}present
+                                {% elif day.status == 'Absent' %}absent
+                                {% elif day.status == 'Late' %}late
+                                {% else %}no-record
+                                {% endif %}">
+                                {% if day.day != 0 %}
+                                    <span>{{ day.day }}</span>
+                                    <small>{{ day.status }}</small>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="attendance-summary">
+                    <h4>Attendance Summary:</h4>
+                    <ul>
+                        <li>Total Days in Month: {{ total_days }}</li>
+                        <li>Present: {{ present_count }}</li>
+                        <li>Absent: {{ absent_count }}</li>
+                        <li>Late: {{ late_count }}</li><br>
+                        <li><strong>Attendance Percentage: {{ attendance_percentage }}%</strong></li>
+                    </ul>
+                </div>
+                <br>
+            {% else %}
+                <div class="alert alert-danger">
+                    <p>You need to <a href="{% url 'users:register' %}">Sign Up</a> to view your attendance records.</p>
+                </div><br>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- <div class="dashboard">
+        <div class="container">
+            <br><br><h1>{{ welcome_message }} <i class="fa-solid fa-face-smile-wink"></i></h1>
+            <p class="quote-dashboard">“Education is the passport to the future, for tomorrow belongs to those who prepare for it today.” —Malcolm X</p>
+
+            {% if profile %}
+                <div class="card mt-4">
+                    <div class="card-header bg-info text-white">
+                        <h5>Your Profile Details</h5>
+                    </div> -->
+                    <!-- <div class="card-body">
+                        <p><strong>Full Name:</strong> {{ profile.full_name }}</p>
+                        <p><strong>Roll No:</strong> {{ profile.roll_no }}</p>
+                        <p><strong>Standard:</strong> {{ profile.std }}</p>
+                        <p><strong>Division:</strong> {{ profile.division }}</p>
+                    </div>
+                </div><br>
+            {% else %}
+                <div class="alert alert-warning mt-4">
+                    <p>No profile details available. Please update your profile!</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="calendar-dashboard">
+        <br><div class="container">
+            <h1>Attendance Dashboard</h1><br>
+            <h3><i class="fa-solid fa-calendar-days"></i> {{ month }}</h3>
+        
+            <div class="calendar">
+                <div class="calendar-header">
+                    <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+                </div>
+                <div class="calendar-body">
+                    {% for day in calendar_days %}
+                        <div class="day {% if day.status == 'Present' %}present{% elif day.status == 'Absent' %}absent{% elif day.status == 'Late' %}late{% else %}no-record{% endif %}">
+                            {% if day.day != 0 %}
+                                <span>{{ day.day }}</span>
+                                <small>{{ day.status }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="attendance-summary">
+                <h4>Attendance Summary:</h4>
+                <ul>
+                    <li>Total Days in Month: {{ total_days }}</li>
+                    <li>Present: {{ present_count }}</li>
+                    <li>Absent: {{ absent_count }}</li>
+                    <li>Late: {{ late_count }}</li><br>
+                    <li><strong>Attendance Percentage: {{ attendance_percentage }}%</strong></li>
+                </ul>
+            </div><br>
+        </div>
+    </div> -->
+
+    <style>
+        .dashboard {
+            background: linear-gradient(135deg, rgb(249, 226, 21), rgb(255, 153, 51), rgb(255, 102, 204));
+        }
+
+        .container {
+            width: 600px;
+        }
+
+        .quote-dashboard {
+            background-color: red;
+            padding: 20px;
+            border-radius: 20px 0px;
+            color: aliceblue;
+            font-size: 20px;
+            width: 800px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            background-color: rgb(25, 25, 87);
+            color: wheat;
+        }
+
+        .card-body {
+            margin-left: 20px;
+        }
+
+        .card-body strong {
+            font-size: 20px;
+        }
+
+        .card-body p {
+            font-size: 18px;
+        }
+
+        .alert {
+            text-align: center;
+        }
+
+        .calendar-dashboard {
+            background-color: rgb(25, 25, 87);
+            color: white;
+        }
+
+        .calendar {
+            display: flex;
+            flex-direction: column;
+            width: 800px;
+        }
+
+        .calendar-header {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .calendar-body {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .day {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            border-radius: 4px;
+            min-height: 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .present {
+            background-color: blue;
+            color: white;
+        }
+
+        .absent {
+            background-color: red;
+            color: white;
+        }
+
+        .late {
+            background-color: yellow;
+            color: black;
+        }
+
+        .no-record {
+            background-color: grey;
+            color: white;
+        }
+
+        .attendance-summary {
+            margin-bottom: 20px;
+            margin-left: 500px;
+            width: 300px;
+            margin-top: -10px;
+            padding: 20px;
+            background-color: #F5EFE7;
+            color: black;
+            border-radius: 10px;
+        }
+
+        .attendance-summary ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .attendance-summary li {
+            margin: 5px 0;
+        }
+
+        .attendance-summary strong {
+            background-color: red;
+            color: aliceblue;
+            padding: 10px;
+        }
+    </style>
+
+{% endblock %}

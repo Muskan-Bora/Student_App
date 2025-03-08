@@ -1,0 +1,132 @@
+{% extends 'student_app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- <div class="offset-md-2">
+        <div class="container">
+            <h1 class="heading">Your Academic Courses</h1>
+            <div class="course-grid">
+                {% for progress in progress_list %}
+                    <div class="course-item">
+                        <h3 class="course-name"><i class="fa-solid fa-check-double"></i> {{ progress.course.name }}</h3>
+                        <p class="course-description">{{ progress.course.description }}</p>
+                        <p class="course-completion"><strong><i class="fas fa-trophy"></i> Completion:</strong> {{ progress.completion_percentage }}%</p>
+                        <a class="course-link" href="{% url 'course_detail' progress.course.id %}">View Details</a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div> -->
+
+    <div class="offset-md-2">
+        <div class="container">
+            <h1 class="heading">Our Academic Courses</h1>
+            <div class="course-grid">
+                {% for progress in progress_list %}
+                    <div class="course-item">
+                        <h3 class="course-name"><i class="fa-solid fa-check-double"></i> {{ progress.course.name }}</h3>
+                        <p class="course-description">{{ progress.course.description }}</p>
+
+                        {% if user.is_authenticated %}
+                            <p class="course-completion">
+                                <strong><i class="fas fa-trophy"></i> Completion:</strong>
+                                {{ progress.completion_percentage }}%
+                            </p>
+                        {% else %}
+                            <p class="course-completion" style="background-color: lightgray; color: black;">
+                                Login to track your progress.
+                            </p>
+                        {% endif %}
+
+                        {% if user.is_authenticated %}
+                            <a class="course-link" href="{% url 'course_detail' progress.course.id %}">View Details</a>
+                        {% else %}
+                            <a class="course-link" href="{% url 'users:register' %}" style="background-color: red;">
+                                Sign up now to view details
+                            </a>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <style>
+        .container {
+            max-width: 1200px;
+            margin: 10px auto;
+            background: #001A6E;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 1100px;
+        }
+
+        .heading {
+            text-align: center;
+            color: #f7f0f0;
+            margin-bottom: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .course-item {
+            padding: 15px;
+            background: #597ead;
+            /* border: 1px solid #ddd; */
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .course-item:hover {
+            background: #1b252e;
+            border-color: #aaa;
+        }
+
+        .course-name {
+            margin: 0 0 10px;
+            color: #f6f5ea;
+            font-family: Arial, sans-serif;
+        }
+
+        .course-description {
+            margin: 5px 0;
+            color: #ebf4fc;
+            font-family: Arial, sans-serif;
+        }
+
+        .course-completion {
+            font-weight: bold;
+            color: #141f50;
+            margin-top: 10px;
+            font-family: Arial, sans-serif;
+            border-radius: 10px;
+            padding: 10px;
+            background-color: yellow;
+        }
+
+        .course-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 8px 12px;
+            background-color: #241615;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 20px;
+        }
+
+        .course-link:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+{% endblock %}
+

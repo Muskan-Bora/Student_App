@@ -1,0 +1,102 @@
+{% extends 'student_app/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="offset-md-2">
+    <div class="container">
+        <h1><b>Your Profile <i class="fa-regular fa-user"></i></b></h1>
+        <div class="card">
+            <div class="card-body">
+                <img src="{{ profile.image.url }}" alt="Profile Image" style="width: 150px; height: 150px;">
+                <p><strong>Username:</strong> {{ profile.user.username }}</p>
+                <p><strong>Full Name:</strong> {{ profile.full_name }}</p>
+                <p><strong>Roll No:</strong> {{ profile.roll_no }}</p>
+                <p><strong>Standard:</strong> {{ profile.std }}</p>
+                <p><strong>Division:</strong> {{ profile.division }}</p>
+                <a href="{% url 'users:profform' %}" class="btn btn-primary"><b>Edit Profile</b></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <style>
+    /* General Reset */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: black;
+        }
+
+        /* Container */
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #a9eae2;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Header */
+        h1 {
+            font-size: 24px;
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Card */
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .card-body {
+            padding: 20px;
+            text-align: center;
+            background-color: #dbe3e2c5;
+        }
+
+        /* Profile Image */
+        .card-body img {
+            border-radius: 50%;
+            border: 3px solid #007bff;
+            margin-bottom: 20px;
+        }
+
+        /* Profile Details */
+        .card-body p {
+            font-size: 16px;
+            color: #555;
+            margin: 10px 0;
+            text-align: left;
+            margin-left: 60px;
+        }
+
+        .card-body strong {
+            color: #000;
+        }
+
+        /* Button */
+        .btn {
+            display: inline-block;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+{% endblock %}
