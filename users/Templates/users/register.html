@@ -12,53 +12,100 @@
                         <h4><b>Create Your User Account</b> <i class="fa-solid fa-circle-up"></i></h4>
                     </div>
                 </div>
+
                 <div class="card-body">
                     <form method="POST">
                         {% csrf_token %}
-                        
-                        <!-- Row 1: Username and Email -->
+
+                        <!-- Validation Notes -->
+                        <div class="alert alert-info">
+                            <strong>Note:</strong>
+                            <ul>
+                                <li>Username must be between 6 to 30 characters and contain only letters, numbers, or underscores.</li>
+                                <li>Email must be a valid email address.</li>
+                                <li>First and Last names are required.</li>
+                                <li>Password must be at least 8 characters long, containing both letters and numbers.</li>
+                                <li>Password confirmation must match the entered password.</li>
+                            </ul>
+                        </div>
+                    
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Username:</label>
                                 {{ form.username }}
+                                {% if form.username.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.username.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Email:</label>
                                 {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.email.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
-                
-                        <!-- Row 2: First Name and Last Name -->
+                    
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>First Name:</label>
                                 {{ form.first_name }}
+                                {% if form.first_name.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.first_name.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Last Name:</label>
                                 {{ form.last_name }}
+                                {% if form.last_name.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.last_name.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
-                
-                        <!-- Row 3: Password and Confirm Password -->
+                    
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 <label>Password:</label>
                                 {{ form.password1 }}
+                                {% if form.password1.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.password1.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Confirm Password:</label>
                                 {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                    <div class="text-danger">
+                                        {% for error in form.password2.errors %}
+                                            <p>{{ error }}</p>
+                                        {% endfor %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
-
-                        {% for error in field.errors %}
-                            <p class="text-danger">{{ error }}</p>
-                        {% endfor %}
-                
-                        <!-- Submit Button -->
+                    
                         <div class="text-center">
-                            <button type="submit" class="btn btn-warning"><b>Sign Up</b></button>
+                            <button type="submit" class="btn btn-primary"><b>Sign Up</b></button>
                         </div>
                     </form>
                 </div>
