@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-u2f6kn0ugpv_$-!q=fx-#4s+mm#wr&05b@^fm&6!lnthd8e(&y
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "student-app-k5vu.onrender.com",
+    "student-app.onrender.com",
     "localhost",
     "127.0.0.1"
 ]
