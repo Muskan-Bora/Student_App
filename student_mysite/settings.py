@@ -83,8 +83,10 @@ ROOT_URLCONF = 'student_mysite.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "student", "Templates")],  # Change path to match your folder structure
-        'DIRS': [os.path.join(BASE_DIR, "users", "Templates")],  # Change path to match your folder structure
+        'DIRS': [
+            os.path.join(BASE_DIR, "student", "Templates"),  # Ensure lowercase
+            os.path.join(BASE_DIR, "users", "Templates"),  # Ensure lowercase
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
